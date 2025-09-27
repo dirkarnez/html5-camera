@@ -35,20 +35,22 @@
           })
           .then(streamList => {
               return Promise.all(
-                  streamList.map(stream => {
-                      const length = stream.getVideoTracks().length;
-                      if (length > 0) {
-                          // todo
-                      }
-                      return new ImageCapture(stream.getVideoTracks()[0])
-                          .getPhotoCapabilities()
-                          .then(photoCapabilities => {
-                              return `${stream.id} vt[0]: ${photoCapabilities.imageWidth.max} x ${photoCapabilities.imageHeight.max}`;
-                          });
-                  })
-              ).then(strings => {
-                  alert(strings.join(","));
-              });
+                  streamList
+                      .map(stream => {
+                          // const length = stream.getVideoTracks().length;
+                          // if (length > 0) {
+                          //     // todo
+                          // }
+                          return new ImageCapture(stream.getVideoTracks()[0])
+                              .getPhotoCapabilities()
+                              .then(photoCapabilities => {
+                                  return `${stream.id} vt[0]: ${photoCapabilities.imageWidth.max} x ${photoCapabilities.imageHeight.max}`;
+                              });
+                      })
+                  )
+          })
+          .then(strings => {
+              alert(strings.join(","));
           });
     }
   </script>
