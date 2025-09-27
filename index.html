@@ -34,8 +34,6 @@
                 )
           })
           .then(streamList => {
-              // 
-              // 
               return Promise.all(
                   streamList.map(stream => {
                       const length = stream.getVideoTracks().length;
