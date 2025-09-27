@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+  <button onclick="test()">Test</button>
+  <script>
+    function test() {
+        navigator
+          .mediaDevices
+          .getUserMedia({ video: true })
+          .then((mediaStream) => {
+            // document.querySelector("video").srcObject = mediaStream;
+              alert(mediaStream.getVideoTracks().length)
+          });
+    }
+  </script>
+</body>
+</html>
