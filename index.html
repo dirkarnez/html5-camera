@@ -8,12 +8,33 @@
   <button onclick="test()">Test</button>
   <script>
     function test() {
-        navigator
+        // navigator
+        //   .mediaDevices
+        //   .getUserMedia({ video: true })
+        //   .then((mediaStream) => {
+        //     // document.querySelector("video").srcObject = mediaStream;
+        //       alert(mediaStream.getVideoTracks().length)
+        //   });
+        
+      navigator
           .mediaDevices
-          .getUserMedia({ video: true })
-          .then((mediaStream) => {
-            // document.querySelector("video").srcObject = mediaStream;
-              alert(mediaStream.getVideoTracks().length)
+          .enumerateDevices()
+          .then(mediaDevices => {
+              return Promise.all(
+                  mediaDevices
+                  .filter(mediaDevice => (
+                      mediaDevice.kind === "videoinput"
+                  ))
+                  .map(mediaDevice => (
+                      navigator.mediaDevices.getUserMedia({
+                        video:  { deviceId: { exact: mediaDevice.deviceId }  },
+                        audio: false
+                      })
+                  ))
+                )
+          })
+          .then(streamList => {
+              alert(streamList.map(stream => `${stream.id}: ${stream.getVideoTracks().length}`).join(","));
           });
     }
   </script>
